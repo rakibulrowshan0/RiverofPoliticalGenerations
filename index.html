@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The River of Political Generations — Bangladesh</title>
+<meta name="description" content="An interactive cinematic research experience about political time, generational memory, historical ownership and the making of Bangladesh.">
+<style>
+:root{
+  --bg:#07100f; --ink:#edf2e9; --muted:#9ba99e; --line:rgba(237,242,233,.14);
+  --gold:#d6b36a; --cyan:#79c7c1; --red:#c96f62; --panel:rgba(14,24,22,.78);
+  --max:1240px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 70% 10%,#18332c 0,#07100f 40%,#030807 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none} button{font:inherit}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:50;width:0}
+.nav{position:fixed;z-index:40;top:0;left:0;right:0;padding:18px 4vw;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(#030807dd,transparent);backdrop-filter:blur(5px)}
+.brand{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase}.navlinks{display:flex;gap:20px;font-size:.75rem;color:var(--muted)}
+.hero{min-height:100vh;display:grid;place-items:center;padding:110px 5vw 70px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:10% -10% 0;background:
+radial-gradient(ellipse at 50% 70%,rgba(121,199,193,.16),transparent 42%),
+linear-gradient(105deg,transparent 47%,rgba(214,179,106,.08) 48%,transparent 50%);
+pointer-events:none}
+.hero-inner{max-width:1050px;text-align:center;position:relative}
+.kicker{color:var(--gold);letter-spacing:.24em;text-transform:uppercase;font-size:.72rem}
+h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(3.2rem,9vw,8.6rem);line-height:.86;margin:22px 0}
+.hero p{max-width:760px;margin:0 auto;color:#b8c4bb;font-size:clamp(1rem,2vw,1.3rem)}
+.cta{display:flex;justify-content:center;gap:12px;margin-top:34px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:#0c1715;color:var(--ink);padding:11px 18px;border-radius:999px;cursor:pointer}
+.btn.primary{background:var(--gold);color:#12100a;border-color:var(--gold)}
+.scroll{margin-top:65px;color:var(--muted);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase}
+.section{max-width:var(--max);margin:auto;padding:100px 5vw}
+.section-head{display:grid;grid-template-columns:.7fr 1.3fr;gap:50px;align-items:end;margin-bottom:45px}
+.eyebrow{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+h2{font:400 clamp(2.4rem,5vw,5rem)/.95 Georgia,serif;margin:0}
+.lead{font-size:1.15rem;color:#b8c4bb;max-width:720px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:25px}
+.river-wrap{position:relative;min-height:690px;overflow:hidden;border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,#0b1715,#07100f)}
+.river{position:absolute;left:50%;top:-5%;width:220px;height:110%;transform:translateX(-50%) rotate(5deg);background:linear-gradient(90deg,transparent,#183e3b,#2b6b65,#183e3b,transparent);filter:blur(9px);opacity:.72}
+.river-core{position:absolute;left:50%;top:0;width:3px;height:100%;background:linear-gradient(#d6b36a,#79c7c1,#d6b36a);transform:translateX(-50%)}
+.nodes{position:relative;display:flex;flex-direction:column;gap:0;padding:42px 5%}
+.node{display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;min-height:118px}
+.node:nth-child(odd) .card{grid-column:1;text-align:right}.node:nth-child(odd) .dot{grid-column:2;grid-row:1}
+.node:nth-child(even) .card{grid-column:3}.node:nth-child(even) .dot{grid-column:2;grid-row:1}
+.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:rgba(4,11,10,.72);cursor:pointer;transition:.25s}
+.card:hover,.card.active{border-color:var(--gold);transform:translateY(-2px)}
+.year{color:var(--gold);font-weight:700;font-size:.8rem;letter-spacing:.08em}
+.title{font-family:Georgia,serif;font-size:1.45rem;margin:3px 0}.small{font-size:.83rem;color:var(--muted)}
+.dot{width:18px;height:18px;border-radius:50%;background:var(--gold);border:4px solid #0a1714;box-shadow:0 0 0 1px var(--gold);justify-self:center;z-index:2}
+.detail{margin-top:20px;min-height:150px}
+.detail h3{font:400 1.8rem Georgia,serif;margin:.2rem 0}.detail p{color:#b9c5bc}
+.generations{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.gen{min-height:260px;cursor:pointer;position:relative;overflow:hidden}
+.gen:after{content:"";position:absolute;inset:auto 0 0;height:50%;background:linear-gradient(transparent,#07100fee)}
+.gen > *{position:relative;z-index:2}.gen-num{font-size:3rem;color:var(--gold);font-family:Georgia,serif}.gen h3{font:400 1.5rem Georgia,serif}.gen p{color:#aebbb1;font-size:.9rem}
+.gen.selected{outline:1px solid var(--gold);background:#11221e}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.axis{display:grid;gap:10px}.axis-row{display:grid;grid-template-columns:140px 1fr;gap:15px;align-items:center}.bar{height:8px;background:#162521;border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--gold))}
+.cycle{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.step{text-align:center;padding:22px 10px;border-top:1px solid var(--line)}.step b{display:block;font:400 1.1rem Georgia,serif}.step span{font-size:.78rem;color:var(--muted)}
+.quote{font:400 clamp(2rem,4vw,4.2rem)/1.08 Georgia,serif;text-align:center;max-width:1000px;margin:0 auto}
+.question{border-top:1px solid var(--line);padding:24px 0;display:flex;justify-content:space-between;gap:20px;cursor:pointer}
+.answer{display:none;color:#b8c4bb;max-width:800px}.question.open .answer{display:block}.question strong{font:400 1.4rem Georgia,serif}
+.footer{padding:90px 5vw 60px;border-top:1px solid var(--line);text-align:center;color:var(--muted)}
+@media(max-width:850px){.navlinks{display:none}.section-head,.split{grid-template-columns:1fr}.generations{grid-template-columns:1fr 1fr}.node{grid-template-columns:1fr 45px}.node .card{grid-column:1!important;text-align:left!important}.node .dot{grid-column:2!important}.river{left:auto;right:25px}.river-core{left:auto;right:45px}.cycle{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.generations{grid-template-columns:1fr}.node{grid-template-columns:1fr 32px}.river-core{right:30px}.river{right:10px}.section{padding:70px 5vw}.nav{padding:15px 5vw}h1{font-size:3.5rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.card{transition:none}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<nav class="nav">
+  <a class="brand" href="#top">Political Delta / 01</a>
+  <div class="navlinks"><a href="#river">River</a><a href="#generations">Generations</a><a href="#memory">Memory</a><a href="#future">Future</a></div>
+</nav>
+
+<header class="hero" id="top">
+ <div class="hero-inner">
+  <div class="kicker">Bangladesh · Political Time · Generational Memory</div>
+  <h1>The River of<br>Political Generations</h1>
+  <p>A cinematic research interface for understanding Bangladesh not only as a sequence of historical events, but as a living river of memories, ruptures, institutions and generations.</p>
+  <div class="cta"><a class="btn primary" href="#river">Enter the river</a><a class="btn" href="#thesis">Read the thesis</a></div>
+  <div class="scroll">Scroll to travel through political time ↓</div>
+ </div>
+</header>
+
+<section class="section" id="thesis">
+ <div class="section-head"><div><div class="eyebrow">01 / Central proposition</div><h2>A nation is inherited. Its meaning is contested.</h2></div>
+ <p class="lead">Each political generation receives memories produced by earlier struggles, interprets them through its own historical experience, and may attempt to redefine what the nation, liberation, democracy and political legitimacy mean for the next generation.</p></div>
+ <div class="panel">
+  <p><b>Core research question:</b> When one generation inherits a nation created through another generation’s struggle, who has the authority to define what that struggle means for the future?</p>
+  <p class="small">This project treats “generation” as an analytical political cohort rather than a strict biological age group. A formative event can create a political generation across multiple birth cohorts.</p>
+ </div>
+</section>
+
+<section class="section" id="river">
+ <div class="section-head"><div><div class="eyebrow">02 / The historical river</div><h2>Political time flows as sediment.</h2></div>
+ <p class="lead">Events do not simply disappear when the calendar moves forward. They become memory, narrative, identity, institutions and arguments that can re-emerge decades later.</p></div>
+ <div class="river-wrap">
+  <div class="river"></div><div class="river-core"></div>
+  <div class="nodes" id="nodes"></div>
+ </div>
+ <div class="panel detail" id="detail" aria-live="polite"><h3>Select a historical node</h3><p>Each node opens a research lens: event → memory → political meaning → institutional consequence → generational inheritance.</p></div>
+</section>
+
+<section class="section" id="generations">
+ <div class="section-head"><div><div class="eyebrow">03 / Political generations</div><h2>Different memories. One state.</h2></div>
+ <p class="lead">The categories below are deliberately porous. They overlap, contradict one another and contain internal diversity.</p></div>
+ <div class="generations" id="gens"></div>
+ <div class="panel detail" id="genDetail"><h3>Choose a generation</h3><p>Explore its formative event, inherited narrative and possible political imprint.</p></div>
+</section>
+
+<section class="section" id="memory">
+ <div class="section-head"><div><div class="eyebrow">04 / Historical ownership</div><h2>Who owns the founding narrative?</h2></div>
+ <p class="lead">“Historical ownership” here means the social and political authority to define which memories count, how sacrifice is interpreted, and which narrative becomes institutionalized.</p></div>
+ <div class="split">
+  <div class="panel"><h3>From event to legitimacy</h3><div class="axis">
+   <div class="axis-row"><span>Event</span><div class="bar"><i style="width:100%"></i></div></div>
+   <div class="axis-row"><span>Memory</span><div class="bar"><i style="width:84%"></i></div></div>
+   <div class="axis-row"><span>Narrative</span><div class="bar"><i style="width:72%"></i></div></div>
+   <div class="axis-row"><span>Identity</span><div class="bar"><i style="width:61%"></i></div></div>
+   <div class="axis-row"><span>Legitimacy</span><div class="bar"><i style="width:49%"></i></div></div>
+   <div class="axis-row"><span>Institution</span><div class="bar"><i style="width:39%"></i></div></div>
+  </div></div>
+  <div class="panel"><h3>The reproduction cycle</h3><div class="cycle">
+   <div class="step"><b>Control</b><span>political order</span></div>
+   <div class="step"><b>Familiarity</b><span>institutional habits</span></div>
+   <div class="step"><b>Normalization</b><span>professional life</span></div>
+   <div class="step"><b>Reproduction</b><span>successors</span></div>
+   <div class="step"><b>Naturalization</b><span>“always was”</span></div>
+  </div></div>
+ </div>
+</section>
+
+<section class="section">
+ <div class="quote">“Bangladesh can be read as a river of political transformation by generations — carrying the sediment of earlier struggles while repeatedly changing its course.”</div>
+</section>
+
+<section class="section" id="2024">
+ <div class="section-head"><div><div class="eyebrow">05 / Generation 2024</div><h2>Gen Z is demographic. Generation 2024 is historical.</h2></div>
+ <p class="lead">The distinction matters. Gen Z describes an age cohort; “Generation 2024” describes a formative political experience that can leave a lasting imprint beyond a single age group.</p></div>
+ <div class="panel">
+  <h3>The generational imprint hypothesis</h3>
+  <p>A mass political rupture can become a reference point through which a cohort interprets state power, policing, education, employment, media, citizenship, constitutional legitimacy and the future. The hypothesis is not that everyone in the cohort thinks alike, but that the event becomes unusually available as a shared political memory.</p>
+ </div>
+</section>
+
+<section class="section" id="future">
+ <div class="section-head"><div><div class="eyebrow">06 / The next delta</div><h2>What happens when memory becomes future policy?</h2></div>
+ <p class="lead">The research ultimately moves from remembering the past to asking how competing memories can coexist without turning history into permanent political ownership.</p></div>
+ <div class="panel">
+  <div class="question"><strong>Can 1971 and 2024 belong to the same national story?</strong><div class="answer">Yes, analytically, if the relationship is studied as inheritance and reinterpretation rather than forced equivalence. A later generation can inherit the same founding history while asking different questions about legitimacy.</div></div>
+  <div class="question"><strong>Can historical memory be plural without becoming relativism?</strong><div class="answer">Plural memory does not require every claim to be equally true. Evidence, testimony, archives and contradiction remain essential. The goal is to map competing memories while distinguishing documented fact from interpretation.</div></div>
+  <div class="question"><strong>What would make Bangladesh “greater”?</strong><div class="answer">The project leaves “greater” open to measurable definitions: democratic institutions, justice, education, science, economic capability, cultural confidence, ecological resilience, human security and regional contribution — not territorial expansion.</div></div>
+ </div>
+</section>
+
+<footer class="footer">
+ <div class="kicker">Everything flows. Nothing stays the same.</div>
+ <p>THE RIVER OF POLITICAL GENERATIONS · A research interface for Bangladesh</p>
+ <p class="small">Prototype architecture: timeline + generational memory + historical ownership + institutional reproduction + future-state inquiry.</p>
+</footer>
+
+<script>
+const events=[
+ {y:"1905",t:"Bangabhanga",s:"A foundational rupture in the political geography and imagination of Bengal.",d:"Use this node to study how administrative division, anti-partition politics, communal politics, economic interests and later memory contributed to competing ideas of Bengal and political community."},
+ {y:"1911",t:"Annulment",s:"A reversal that itself became historical memory.",d:"The annulment demonstrates that political geography can be changed, reversed and remembered — creating long-term arguments about representation, identity and power."},
+ {y:"1947",t:"Partition",s:"Bengal is divided amid the end of British rule.",d:"Partition produced state borders, migration, violence, property transfer and new political identities. Its consequences continued far beyond the formal creation of India and Pakistan."},
+ {y:"1952",t:"Language Movement",s:"Language becomes a central field of political identity.",d:"The Language Movement is a major memory node through which language, culture, state authority and political belonging became intertwined."},
+ {y:"1966",t:"Six-Point Movement",s:"Autonomy becomes a central political demand.",d:"A key node for examining federalism, economic inequality, representation and the widening distance between East and West Pakistan."},
+ {y:"1969",t:"Mass Uprising",s:"Popular mobilization reshapes political possibility.",d:"The 1969 uprising is a bridge between autonomy politics and the larger crisis that culminated in 1971."},
+ {y:"1971",t:"Liberation War",s:"A founding rupture and enduring source of legitimacy.",d:"1971 remains the central founding narrative of Bangladesh, while its meaning, actors, memories and political uses remain contested across generations."},
+ {y:"1975",t:"Political Rupture",s:"The post-liberation state enters a radically different phase.",d:"A crucial node for studying the fragility of institutions, constitutional change, violence, military intervention and competing narratives of the early republic."},
+ {y:"1990",t:"Mass Uprising",s:"A generation experiences the fall of authoritarian rule.",d:"1990 became a formative democratic memory for a political cohort and helped shape later expectations about elections, parties and civic mobilization."},
+ {y:"2007–08",t:"Caretaker / Emergency Era",s:"Political institutions experience prolonged intervention.",d:"This period can be studied as a political-generation experience involving emergency rule, anti-corruption drives, institutional uncertainty and delayed electoral politics."},
+ {y:"2009–2024",t:"Long Political Continuity",s:"Fifteen consecutive years under one governing order.",d:"A long period can shape political socialization: people may enter school, university and professional life under the same dominant institutional environment. Duration alone, however, does not prove a single political effect."},
+ {y:"2024",t:"July Mass Uprising",s:"A new formative rupture enters Bangladesh’s political memory.",d:"The July–August 2024 uprising can be studied as the formative memory of a new political cohort, especially among young people, while avoiding the assumption that all participants or all Gen Z share one interpretation."}
+];
+
+const gens=[
+ {n:"01",name:"Liberation Generation",period:"1971",text:"Formed through the Liberation War and the creation of Bangladesh.",d:"Its central memory is national liberation. The research asks how the founding generation’s sacrifices became sources of constitutional, political and moral legitimacy — and how later generations inherited that legitimacy."},
+ {n:"02",name:"1990 Generation",period:"1980s–1991",text:"Formed through anti-autocracy mobilization and democratic transition.",d:"Its formative memory links mass mobilization with the removal of authoritarian rule and the return to parliamentary democracy."},
+ {n:"03",name:"Intervention / Caretaker Generation",period:"2007–2009",text:"Formed amid emergency rule, institutional intervention and political uncertainty.",d:"This cohort experienced the state not simply through elections but through extraordinary intervention, shaping later expectations about institutions and political order."},
+ {n:"04",name:"Generation 2024",period:"July–August 2024",text:"Formed around a new mass political rupture.",d:"Not identical to Gen Z. This is a historical cohort defined by a formative political event. Its long-term imprint remains a research question rather than a settled conclusion."}
+];
+
+const nodes=document.getElementById("nodes");
+events.forEach((e,i)=>{
+ const el=document.createElement("div"); el.className="node";
+ el.innerHTML=`<div class="card" tabindex="0"><div class="year">${e.y}</div><div class="title">${e.t}</div><div class="small">${e.s}</div></div><div class="dot"></div>`;
+ el.querySelector(".card").addEventListener("click",()=>showEvent(i,el.querySelector(".card")));
+ el.querySelector(".card").addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();showEvent(i,el.querySelector(".card"))}});
+ nodes.appendChild(el);
+});
+function showEvent(i,card){
+ document.querySelectorAll(".card").forEach(x=>x.classList.remove("active"));card.classList.add("active");
+ const e=events[i];document.getElementById("detail").innerHTML=`<div class="year">${e.y}</div><h3>${e.t}</h3><p>${e.d}</p>`;
+}
+const gs=document.getElementById("gens");
+gens.forEach((g,i)=>{
+ const el=document.createElement("div");el.className="panel gen";el.tabIndex=0;
+ el.innerHTML=`<div class="gen-num">${g.n}</div><h3>${g.name}</h3><div class="year">${g.period}</div><p>${g.text}</p>`;
+ const act=()=>{document.querySelectorAll(".gen").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");document.getElementById("genDetail").innerHTML=`<div class="year">${g.period}</div><h3>${g.name}</h3><p>${g.d}</p>`};
+ el.addEventListener("click",act);el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();act()}});
+ gs.appendChild(el);
+});
+document.querySelectorAll(".question").forEach(q=>q.addEventListener("click",()=>q.classList.toggle("open")));
+window.addEventListener("scroll",()=>{const h=document.documentElement.scrollHeight-innerHeight;document.getElementById("progress").style.width=(h>0?(scrollY/h)*100:0)+"%"},{passive:true});
+</script>
+</body>
+</html>
